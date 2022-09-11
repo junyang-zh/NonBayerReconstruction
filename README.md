@@ -1,3 +1,24 @@
+# Non-Bayer filter array reconstruction
+
+forked from BJDD.
+
+## Steps
+
+0. Create images from videos;
+
+```powershell
+python3 .\shipinjiequ.py d:\Desktop\bayer_reconstruction_data\videoinput d:\Desktop\bayer_reconstruction_data\videooutput
+```
+
+1. Generate test data from images (data sampling);
+
+```powershell
+python3 main.py -ds -s d:\Desktop\bayer_reconstruction_data\videooutput -d d:\Desktop\bayer_reconstruction_data\test_data -g 3
+```
+
+2.
+
+
 # Beyond Joint Demosaicking and Denoising (BJDD)
 This is the official implementation of paper title "Beyond Joint Demosaicking and Denoising: An Image Processing Pipeline for a Pixel-bin Image Sensor" from CVPRW21. To download full paper **[[Click Here](https://openaccess.thecvf.com/content/CVPR2021W/NTIRE/html/Sharif_Beyond_Joint_Demosaicking_and_Denoising_An_Image_Processing_Pipeline_for_CVPRW_2021_paper.html)]**.
 
