@@ -14,6 +14,7 @@ import cv2
 from PIL import Image
 from dataTools.dataNormalization import *
 from dataTools.customTransform import *
+from torchvision.transforms import InterpolationMode
 
 un = UnNormalize()
 
@@ -167,7 +168,7 @@ def inputForInference(path, imgW = 256, imgH = 256, gridSize = 4):
     img = quadBayerSampler(img)
     img = Image.fromarray(img)
     transformHRGT = transforms.Compose([  
-                                            #transforms.Resize((256,256), interpolation=Image.BICUBIC),
+                                            #transforms.Resize((256,256), interpolation=InterpolationMode.BICUBIC),
                                             transforms.ToTensor(),
                                             transforms.Normalize(normMean, normStd),
                                             transforms.RandomApply([AddGaussianNoise(0., .1)], p=1)

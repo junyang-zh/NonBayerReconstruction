@@ -7,7 +7,7 @@ from torchvision.models import vgg19
 class regularizedFeatureLoss(nn.Module):
     def __init__(self, percepRegulator = 1.0):
         super(regularizedFeatureLoss, self).__init__()
-        vgg19_model = vgg19(pretrained=True)
+        vgg19_model = vgg19(weights=models.VGG19_Weights.DEFAULT)
         self.feature_extractor = nn.Sequential(*list(vgg19_model.features.children())[:35])
         self.loss = torch.nn.L1Loss()
         self.percepRegulator = percepRegulator

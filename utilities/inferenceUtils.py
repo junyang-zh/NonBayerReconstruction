@@ -14,6 +14,7 @@ import cv2
 from PIL import Image
 from dataTools.dataNormalization import *
 from PIL import ImageFile
+from torchvision.transforms import InterpolationMode
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 class AddGaussianNoise(object):
@@ -90,7 +91,7 @@ class inference():
 
         if self.resize:
             #resize(256,256)
-            transform = transforms.Compose([ transforms.Resize(self.resize, interpolation=Image.BICUBIC) ])
+            transform = transforms.Compose([ transforms.Resize(self.resize, interpolation=InterpolationMode.BICUBIC) ])
             img = transform(img)
 
         transform = transforms.Compose([ transforms.ToTensor(),

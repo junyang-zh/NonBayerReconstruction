@@ -80,7 +80,7 @@ class MSEloss(nn.Module):
 class Perceptual_loss(nn.Module):
     def __init__(self, content_layer):
         super(Perceptual_loss, self).__init__()
-        vgg = models.vgg19(pretrained=True).features
+        vgg = models.vgg19(weights=models.VGG19_Weights.DEFAULT).features
         model = nn.Sequential()
         i = 1
         j = 1
@@ -365,7 +365,7 @@ class VGGLoss(nn.Module):
     def __init__(self, vgg_path, layers='45', input='RGB', loss='l1'):
         super(VGGLoss, self).__init__()
         self.input = input
-        vgg = models.vgg19(pretrained=False)
+        vgg = models.vgg19(weights=models.VGG19_Weights.DEFAULT)
         if vgg_path is not '':
             vgg.load_state_dict(torch.load(vgg_path))
             # vgg.load_state_dict(torch.load('../../../'+vgg_path))

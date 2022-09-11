@@ -9,6 +9,8 @@ from utilities.customUtils import *
 from dataTools.dataNormalization import *
 from dataTools.customTransform import *
 import os
+from torchvision.transforms import InterpolationMode
+
 class customDatasetReader(Dataset):
     def __init__(self, image_list, imagePathGT, height, width, transformation=True):
         self.image_list = image_list
@@ -18,7 +20,7 @@ class customDatasetReader(Dataset):
         self.imageW = width
         normalize = transforms.Normalize(normMean, normStd)
 
-        self.transformHRGT = transforms.Compose([transforms.Resize((self.imageH,self.imageW), interpolation=Image.BICUBIC),
+        self.transformHRGT = transforms.Compose([transforms.Resize((self.imageH,self.imageW), interpolation=InterpolationMode.BICUBIC),
                                                 transforms.ToTensor(),
                                                 normalize,
                                                 ])

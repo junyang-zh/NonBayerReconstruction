@@ -21,8 +21,8 @@ from utilities.aestheticUtils import *
 from loss.pytorch_msssim import *
 from loss.colorLoss import *
 from loss.percetualLoss import *
-from modelDefinitions.attentionDis import *
-from modelDefinitions.attentionGen import *
+from modelDefinitions.Discriminator import *
+from modelDefinitions.Generator import *
 from torchvision.utils import save_image
 
 
@@ -68,11 +68,11 @@ class BJDD:
 
         # Preapring model(s) for GPU acceleration
         self.device =  torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-        self.attentionNet = attentionNet().to(self.device)
-        self.discriminator = attentiomDiscriminator().to(self.device)
+        self.simpleConvNet = simpleConvNet().to(self.device)
+        self.discriminator = Discriminator().to(self.device)
 
         # Optimizers
-        self.optimizerEG = torch.optim.Adam(self.attentionNet.parameters(), lr=self.learningRate, betas=(self.adamBeta1, self.adamBeta2))
+        self.optimizerEG = torch.optim.Adam(self.simpleConvNet.parameters(), lr=self.learningRate, betas=(self.adamBeta1, self.adamBeta2))
         self.optimizerED = torch.optim.Adam(self.discriminator.parameters(), lr=self.learningRate, betas=(self.adamBeta1, self.adamBeta2))
         
         # Scheduler for Super Convergance
@@ -182,7 +182,7 @@ class BJDD:
                 ##############################
     
                 # Image Generation
-                highResFake = self.attentionNet(rawInput)
+                highResFake = self.simpleConvNet(rawInput)
                 
                 # Optimaztion of Discriminator
                 self.optimizerED.zero_grad()
@@ -229,7 +229,7 @@ class BJDD:
                                     'LossEG' : lossEG.item(),
                                     'LossED' : lossED.item(),
                                     'Path' : self.logPath,
-                                    'Atttention Net' : self.attentionNet,
+                                    'Atttention Net' : self.simpleConvNet,
                                   }
                     tbLogWritter(summaryInfo)
                     save_image(self.unNorm(highResFake[0]), 'modelOutput.png')
@@ -270,7 +270,7 @@ class BJDD:
                 #print(noise)
                 for imgPath in testImageList:
                     img = modelInference.inputForInference(imgPath, noiseLevel=noise).to(self.device)
-                    output = self.attentionNet(img)
+                    output = self.simpleConvNet(img)
                     modelInference.saveModelOutput(output, imgPath, noise, steps)
                     imageCounter += 1
                     if imageCounter % 2 == 0:
@@ -284,7 +284,7 @@ class BJDD:
 
      
         customPrint(Fore.YELLOW + "AttentionNet (Generator)", textWidth=self.barLen)
-        summary(self.attentionNet, input_size =input_size)
+        summary(self.simpleConvNet, input_size =input_size)
         print ("*" * self.barLen)
         print()
 
@@ -293,7 +293,7 @@ class BJDD:
         print ("*" * self.barLen)
         print()
 
-        '''flops, params = get_model_complexity_info(self.attentionNet, input_size, as_strings=True, print_per_layer_stat=False)
+        '''flops, params = get_model_complexity_info(self.simpleConvNet, input_size, as_strings=True, print_per_layer_stat=False)
         customPrint('Computational complexity (Enhace-Gen):{}'.format(flops), self.barLen, '-')
         customPrint('Number of parameters (Enhace-Gen):{}'.format(params), self.barLen, '-')
 
@@ -309,7 +309,7 @@ class BJDD:
         # Saving weights 
         checkpoint = { 
                         'step' : currentStep + 1,
-                        'stateDictEG': self.attentionNet.state_dict(),
+                        'stateDictEG': self.simpleConvNet.state_dict(),
                         'stateDictED': self.discriminator.state_dict(),
                         'optimizerEG': self.optimizerEG.state_dict(),
                         'optimizerED': self.optimizerED.state_dict(),
@@ -326,7 +326,7 @@ class BJDD:
         customPrint(Fore.RED + "Loading pretrained weight", textWidth=self.barLen)
 
         previousWeight = loadCheckpoints(self.checkpointPath, self.modelName)
-        self.attentionNet.load_state_dict(previousWeight['stateDictEG'])
+        self.simpleConvNet.load_state_dict(previousWeight['stateDictEG'])
         self.discriminator.load_state_dict(previousWeight['stateDictED'])
         self.optimizerEG.load_state_dict(previousWeight['optimizerEG']) 
         self.optimizerED.load_state_dict(previousWeight['optimizerED']) 
