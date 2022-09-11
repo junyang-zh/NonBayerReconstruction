@@ -1,6 +1,11 @@
 # MacOS
 .DS_STORE
 
+# Output
+modelOutput.png
+weights
+logDir
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

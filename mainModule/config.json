@@ -1,6 +1,6 @@
 {
 	"gtPath": "d:\\Desktop\\bayer_reconstruction_data\\videooutput",
-	"targetPath": "d:\\Desktop\\bayer_reconstruction_data\\test_data",
+	"targetPath": "d:\\Desktop\\bayer_reconstruction_data\\train_data",
 	"checkpointPath": "./weights/",
 	"testImagePath": "./testingImages/",
 	"resultDir": "./modelOutput/",
@@ -9,7 +9,7 @@
 	"dataSamples": null,
 	"batchSize": 8,
 	"barLen": "64",
-	"interval": "100",
+	"interval": "64",
 	"imageH": "128",
 	"imageW": "128",
 	"inputC": "3",
