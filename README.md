@@ -16,7 +16,11 @@ python3 .\shipinjiequ.py d:\Desktop\bayer_reconstruction_data\videoinput d:\Desk
 python3 main.py -ds -s d:\Desktop\bayer_reconstruction_data\videooutput -d d:\Desktop\bayer_reconstruction_data\test_data -g 3
 ```
 
-2.
+2. Train the model;
+
+```powershell
+python main.py -ts -e 5 -b 8
+```
 
 
 # Beyond Joint Demosaicking and Denoising (BJDD)

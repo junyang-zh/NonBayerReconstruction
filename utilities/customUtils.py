@@ -160,17 +160,7 @@ def createDir(path):
     return True
 
 def imageList(path, multiDir = False, imageExtension =['*.jpg', '*.png', '*.jpeg', '*.tif', '*.bmp']):
-    #types = () # the tuple of file types
-    imageList = []
-    for ext in imageExtension:
-
-        if multiDir == True:
-            imageList.extend(glob.glob(path+"*/"+ext))
-        else:
-            imageList.extend(glob.glob(path+ext))
-        
-        imageList
-    return imageList
+    return [os.path.join(path, f) for f in os.listdir(path)] 
 
 def formatDirPath(path):
 

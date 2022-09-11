@@ -44,7 +44,7 @@ class customDatasetReader(Dataset):
             print ("File deleted:", i)
             i += 1
 
-        self.gtImageFileName = self.imagePathGT + extractFileName(self.image_list[i])
+        self.gtImageFileName = os.path.join(self.imagePathGT, extractFileName(self.image_list[i]))
         self.gtImage = Image.open(self.gtImageFileName)
 
         # Transforms Images for training 

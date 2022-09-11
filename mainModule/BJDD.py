@@ -44,7 +44,7 @@ class BJDD:
         self.inputC = int(config['inputC'])
         self.outputC = int(config['outputC'])
         self.scalingFactor = int(config['scalingFactor'])
-        self.binnigFactor = int(config['binnigFactor'])
+        self.binnigFactor = int(config['binningFactor'])
         self.totalEpoch = int(config['epoch'])
         self.interval = int(config['interval'])
         self.learningRate = float(config['learningRate'])
