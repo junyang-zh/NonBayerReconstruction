@@ -283,12 +283,12 @@ class BJDD:
             input_size = (3, self.imageH//self.scalingFactor, self.imageW//self.scalingFactor)
 
      
-        customPrint(Fore.YELLOW + "AttentionNet (Generator)", textWidth=self.barLen)
+        customPrint(Fore.YELLOW + "SimpleConvNet (Generator)", textWidth=self.barLen)
         summary(self.simpleConvNet, input_size =input_size)
         print ("*" * self.barLen)
         print()
 
-        customPrint(Fore.YELLOW + "AttentionNet (Discriminator)", textWidth=self.barLen)
+        customPrint(Fore.YELLOW + "SimpleConvNet (Discriminator)", textWidth=self.barLen)
         summary(self.discriminator, input_size =input_size)
         print ("*" * self.barLen)
         print()
